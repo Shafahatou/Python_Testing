@@ -54,6 +54,16 @@ def purchasePlaces():
         flash("Erreur lors de la réservation, veuillez réessayer.")
         return redirect(url_for('index'))
 
+      # Vérification du nombre de places (ne doit pas être négatif ou nul)
+    if placesRequired <= 0:
+        flash(f"Erreur : Le nombre de places doit être supérieur à 0.")
+        return render_template('booking.html', club=club, competition=competition)
+
+    # Limitation à un maximum de 12 places réservées par club
+    if placesRequired > 12:
+        flash("Erreur : Vous ne pouvez pas réserver plus de 12 places à la fois.")
+        return render_template('booking.html', club=club, competition=competition)
+
     # Vérification des places disponibles dans la compétition
     if placesRequired > int(competition['numberOfPlaces']):
         flash(f"Erreur : Il n'y a pas assez de places disponibles pour la compétition {competition['name']}.")
