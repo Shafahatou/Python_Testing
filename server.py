@@ -1,5 +1,5 @@
 import json
-from flask import Flask,render_template,request,redirect,flash,url_for
+from flask import Flask,render_template,request,redirect,flash,url_for,session
 
 
 def loadClubs():
@@ -24,10 +24,15 @@ clubs = loadClubs()
 def index():
     return render_template('index.html')
 
-@app.route('/showSummary',methods=['POST'])
+@app.route('/showSummary')
 def showSummary():
-    club = [club for club in clubs if club['email'] == request.form['email']][0]
-    return render_template('welcome.html',club=club,competitions=competitions)
+    if 'club' not in session:
+        flash("Vous devez vous connecter pour accéder à cette page.", "warning")
+        return redirect(url_for('login'))
+    
+    club = session['club']
+    return render_template('welcome.html', club=club, competitions=competitions)
+
 
 
 @app.route('/book/<competition>/<club>')
@@ -87,12 +92,34 @@ def showPoints():
     return render_template('points.html', clubs=clubs)
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        # Vérifie si l'email existe dans la liste des clubs
+        club = next((club for club in clubs if club['email'] == email), None)
+        
+        if club:
+            # L'email est correct, on crée une session pour l'utilisateur
+            session['club'] = club  # Stocke les infos du club dans la session
+            flash(f"Bienvenue {club['name']}!", "success")
+            return redirect(url_for('showSummary'))
+        else:
+            flash("Adresse email invalide. Veuillez réessayer.", "danger")
+            return redirect(url_for('login'))
+    return render_template('login.html')
+
+
+
 # TODO: Add route for points display
 
 
 @app.route('/logout')
 def logout():
+    session.pop('club', None)  # Supprime la session
+    flash("Vous vous êtes déconnecté.", "success")
     return redirect(url_for('index'))
+
 
 # main driver function
 if __name__ == '__main__':
