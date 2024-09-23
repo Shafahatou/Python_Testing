@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -5,13 +6,29 @@
     <title>Booking for {{competition['name']}} || GUDLFT</title>
 </head>
 <body>
-    <h2>{{competition['name']}}</h2>
-    Places available: {{competition['numberOfPlaces']}}
+    <h2>Réservation pour {{competition['name']}}</h2>
+
+    <!-- Détails de la compétition -->
+    <p>Places disponibles : {{competition['numberOfPlaces']}}</p>
+
+    <!-- Détails du club -->
+    <p>Points disponibles pour le club {{club['name']}} : {{club['points']}}</p>
+
+    <!-- Formulaire de réservation -->
     <form action="/purchasePlaces" method="post">
+        <!-- Informations cachées sur le club et la compétition -->
         <input type="hidden" name="club" value="{{club['name']}}">
         <input type="hidden" name="competition" value="{{competition['name']}}">
-        <label for="places">How many places?</label><input type="number" name="places" id=""/>
-        <button type="submit">Book</button>
+
+        <!-- Champ pour le nombre de places -->
+        <label for="places">Combien de places souhaitez-vous réserver ?</label>
+        <input type="number" name="places" id="places" min="1" max="{{competition['numberOfPlaces']}}" required>
+
+        <!-- Bouton de soumission -->
+        <button type="submit">Réserver</button>
     </form>
+
+    <!-- Lien de retour -->
+    <a href="{{ url_for('showSummary') }}">Retour à l'accueil</a>
 </body>
 </html>

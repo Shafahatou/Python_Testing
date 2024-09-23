@@ -1,20 +1,27 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GUDLFT Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Welcome to the GUDLFT Registration Portal!</h1>
-    Please enter your secretary email to continue:
-    <form action="showSummary" method="post">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id=""/>
-        <button type="submit">Enter</button>
-        <a href="{{ url_for('competitions_list') }}" class="btn btn-info mt-3">Voir les compétitions à venir</a>
-        <a href="{{ url_for('select_competition', club_name=club['name']) }}" class="btn btn-info">Sélectionner une compétition</a>
-
-
-    </form>
+    <div class="container">
+        <h1>Bienvenue au portail d'inscription GUDLFT !</h1>
+        <p>Veuillez entrer votre email de secrétaire pour continuer :</p>
+        <form action="/showSummary" method="post">
+            <div class="form-group">
+                <label for="email">Email :</label>
+                <input type="email" name="email" id="email" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Entrer</button>
+        </form>
+        
+        <div class="mt-3">
+            <a href="{{ url_for('competitions_list') }}" class="btn btn-info">Voir les compétitions à venir</a>
+            <!-- Retire le lien de sélection de compétition car 'club' n'est pas défini ici -->
+        </div>
+    </div>
 </body>
 </html>

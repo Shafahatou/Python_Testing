@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compétitions à Venir | GUDLFT Registration</title>
+    <title>Compétitions à Venir</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">Compétitions à Venir</h1>
+        <h1>Compétitions à Venir</h1>
         <table class="table table-bordered mt-3">
             <thead>
                 <tr>
                     <th>Nom de la Compétition</th>
                     <th>Date</th>
-                    <th>Places Disponibles</th>
+                    <th>Nombre de Places</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,6 +24,9 @@
                     <td>{{ competition['name'] }}</td>
                     <td>{{ competition['date'] }}</td>
                     <td>{{ competition['numberOfPlaces'] }}</td>
+                    <td>
+                        <a href="{{ url_for('book', competition=competition['name'], club=club_name) }}" class="btn btn-info">Sélectionner</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

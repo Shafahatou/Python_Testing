@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sélectionner une Compétition | GUDLFT Registration</title>
+    <title>Sélectionner une Compétition</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">Sélectionner une Compétition pour {{ club['name'] }}</h1>
-        <form method="POST">
-            <div class="form-group">
-                <label for="competition">Choisissez une Compétition :</label>
-                <select class="form-control" name="competition" id="competition" required>
-                    {% for competition in competitions %}
-                    <option value="{{ competition['name'] }}">{{ competition['name'] }} - {{ competition['date'] }} ({{ competition['numberOfPlaces'] }} places disponibles)</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Sélectionner</button>
+        <h1>Sélectionner une Compétition</h1>
+        <form action="{{ url_for('book') }}" method="post">
+            <label for="competition">Choisissez une Compétition:</label>
+            <select name="competition" id="competition" required>
+                {% for competition in competitions %}
+                    <option value="{{ competition['name'] }}">{{ competition['name'] }}</option>
+                {% endfor %}
+            </select>
+            <input type="hidden" name="club_name" value="{{ club_name }}">
+            <button type="submit" class="btn btn-primary mt-3">Sélectionner</button>
         </form>
         <a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Retour à l'accueil</a>
     </div>
