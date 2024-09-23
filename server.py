@@ -81,6 +81,11 @@ def purchasePlaces():
     flash('Réservation réussie !')
     return render_template('welcome.html', club=club, competitions=competitions)
 
+# **Nouvelle Route Ajoutée pour Afficher les Points**
+@app.route('/points')
+def showPoints():
+    return render_template('points.html', clubs=clubs)
+
 
 # TODO: Add route for points display
 
@@ -94,10 +99,7 @@ if __name__ == '__main__':
 
     # run() method of Flask class runs the application 
     # on the local development server.
-    app.run()
+    app.run(debug=True)
 
 
-@app.route('/points')
-def showPoints():
-    return render_template('points.html', clubs=clubs)
 
