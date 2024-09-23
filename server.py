@@ -35,14 +35,15 @@ def showSummary():
 
 
 @app.route('/book/<competition>/<club>')
-def book(competition,club):
-    foundClub = [c for c in clubs if c['name'] == club][0]
-    foundCompetition = [c for c in competitions if c['name'] == competition][0]
+def book(competition, club):
+    foundClub = next((c for c in clubs if c['name'] == club), None)
+    foundCompetition = next((c for c in competitions if c['name'] == competition), None)
     if foundClub and foundCompetition:
-        return render_template('booking.html',club=foundClub,competition=foundCompetition)
+        return render_template('booking.html', club=foundClub, competition=foundCompetition)
     else:
         flash("Something went wrong-please try again")
         return render_template('welcome.html', club=club, competitions=competitions)
+
 
 
 @app.route('/purchasePlaces', methods=['POST'])
@@ -118,6 +119,16 @@ def logout():
 @app.route('/competitions')
 def competitions_list():
     return render_template('competitions.html', competitions=competitions)
+
+@app.route('/selectCompetition/<club_name>', methods=['GET', 'POST'])
+def select_competition(club_name):
+    club = next((c for c in clubs if c['name'] == club_name), None)
+    if request.method == 'POST':
+        competition_name = request.form['competition']
+        return redirect(url_for('book', competition=competition_name, club=club_name))
+
+    return render_template('select_competition.html', club=club, competitions=competitions)
+
 
 
 
