@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compétitions à Venir | GUDLFT Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Compétitions à Venir</h1>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Nom de la Compétition</th>
+                    <th>Date</th>
+                    <th>Places Disponibles</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for competition in competitions %}
+                <tr>
+                    <td>{{ competition['name'] }}</td>
+                    <td>{{ competition['date'] }}</td>
+                    <td>{{ competition['numberOfPlaces'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('index') }}" class="btn btn-primary mt-3">Retour à l'accueil</a>
+    </div>
+</body>
+</html>

@@ -24,13 +24,12 @@ clubs = loadClubs()
 def index():
     return render_template('index.html')
 
-@app.route('/showSummary')
+@app.route('/showSummary', methods=['POST'])
 def showSummary():
-    if 'club' not in session:
-        flash("Vous devez vous connecter pour accéder à cette page.", "warning")
-        return redirect(url_for('login'))
-    
-    club = session['club']
+    club = next((club for club in clubs if club['email'] == request.form['email']), None)
+    if not club:
+        flash("Email non trouvé.")
+        return redirect(url_for('index'))
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
@@ -110,15 +109,20 @@ def login():
     return render_template('login.html')
 
 
-
-# TODO: Add route for points display
-
-
 @app.route('/logout')
 def logout():
     session.pop('club', None)  # Supprime la session
     flash("Vous vous êtes déconnecté.", "success")
     return redirect(url_for('index'))
+
+@app.route('/competitions')
+def competitions_list():
+    return render_template('competitions.html', competitions=competitions)
+
+
+
+# TODO: Add route for points display
+
 
 
 # main driver function

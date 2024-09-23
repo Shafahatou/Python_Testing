@@ -1,0 +1,80 @@
+/* Applique uniquement aux tableaux */
+table {
+    filter: grayscale(100%);
+}
+
+/* Styles de base pour la grille */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    text-align: left;
+    filter: grayscale(100%); /* Applique le niveau de gris à la grille */
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    filter: grayscale(100%); /* Applique le niveau de gris aux cellules */
+}
+
+th {
+    background-color: #e0e0e0; /* Couleur de fond gris clair */
+}
+
+body {
+    background-color: #f4f4f4; /* Fond de la page en gris clair */
+    color: #333; /* Couleur de texte légèrement sombre */
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: #555; /* Gris pour les titres */
+}
+
+a {
+    color: #666; /* Couleur des liens en gris */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #333; /* Couleur des liens en survol */
+}
+
+
+
+/* Applique des niveaux de gris à la table */
+.grayscale-table {
+    filter: grayscale(100%);
+}
+
+h1 {
+    text-align: center;
+    color: #333; /* Couleur légèrement sombre */
+}
+
+body {
+    background-color: #f8f9fa; /* Fond clair */
+    color: #333; /* Couleur de texte standard */
+    font-family: Arial, sans-serif;
+}
+
+.table th {
+    background-color: #e9ecef; /* Légère coloration des en-têtes */
+}
+
+.table td, .table th {
+    padding: 12px;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
