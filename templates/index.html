@@ -23,5 +23,24 @@
             
         </div>
     </div>
+    <div class="container"></div>
+        <h1 class="mt-5">Tableau des Points des Clubs</h1>
+        <table class="table table-bordered table-striped mt-3 grayscale-table">
+            <thead>
+                <tr>
+                    <th>Nom du Club</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for club in clubs %}
+                <tr>
+                    <td>{{ club['name'] }}</td>
+                    <td>{{ club['points'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

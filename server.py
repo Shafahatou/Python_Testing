@@ -1,5 +1,6 @@
 import json
 from flask import Flask,render_template,request,redirect,flash,url_for,session
+from datetime import datetime
 
 
 def loadClubs():
@@ -19,18 +20,30 @@ app.secret_key = 'something_special'
 
 competitions = loadCompetitions()
 clubs = loadClubs()
+current_date = datetime.now()
 
-@app.route('/')
+@app.route('/I')
 def index():
+    
     return render_template('index.html')
+
+def get_upcoming_competitions(competitions):
+    c = []
+    for comp in competitions:
+        if(datetime.strptime(comp['date'],'%Y-%m-%d %H:%M:%S') > current_date):
+            c.append(comp)
+        else:
+            pass
+    return c
 
 @app.route('/showSummary', methods=['POST'])
 def showSummary():
+    upcoming_competitions = get_upcoming_competitions(competitions)
     club = next((club for club in clubs if club['email'] == request.form['email']), None)
     if not club:
         flash("Email non trouvé.")
         return redirect(url_for('index'))
-    return render_template('welcome.html', club=club, competitions=competitions)
+    return render_template('welcome.html', club=club, competitions=upcoming_competitions)
 
 
 
@@ -89,9 +102,9 @@ def purchasePlaces():
 
 
 
-@app.route('/points')
+@app.route('/')
 def showPoints():
-    return render_template('points.html', clubs=clubs)
+    return render_template('index.html', clubs=clubs)
 
 
 @app.route('/login', methods=['GET', 'POST'])
