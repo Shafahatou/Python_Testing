@@ -4,31 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking for {{competition['name']}} || GUDLFT</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>Réservation pour {{competition['name']}}</h2>
+    <div class="reservation-container"></div>
+     <h2>Réservation pour {{competition['name']}}</h2>
 
-   
-    <p>Places disponibles : {{competition['numberOfPlaces']}}</p>
+     <p>Places disponibles : {{competition['numberOfPlaces']}}</p>
 
-    
-    <p>Points disponibles pour le club {{club['name']}} : {{club['points']}}</p>
+     <p>Points disponibles pour le club {{club['name']}} : {{club['points']}}</p>
 
-    
+
     <form action="/purchasePlaces" method="post">
-       
+
         <input type="hidden" name="club" value="{{club['name']}}">
         <input type="hidden" name="competition" value="{{competition['name']}}">
 
-       
+
         <label for="places">Combien de places souhaitez-vous réserver ?</label>
         <input type="number" name="places" id="places" min="1" max="{{competition['numberOfPlaces']}}" required>
 
-        
+
         <button type="submit">Réserver</button>
     </form>
 
-   
-    <a href="{{ url_for('showSummary') }}">Retour à l'accueil</a>
+
+    <a href="{{ url_for('showSummary') }}" class="btn-secondary">Retour à l'accueil</a>
 </body>
 </html>

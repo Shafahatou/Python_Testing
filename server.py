@@ -24,7 +24,7 @@ current_date = datetime.now()
 
 @app.route('/I')
 def index():
-    
+
     return render_template('index.html')
 
 def get_upcoming_competitions(competitions):
@@ -52,7 +52,7 @@ def book(competition, club):
     foundClub = next((c for c in clubs if c['name'] == club), None)
     foundCompetition = next((c for c in competitions if c['name'] == competition), None)
     if foundClub and foundCompetition:
-        return render_template('booking.html', club=foundClub, competition=foundCompetition)
+        return render_template('booking.html', club=club, competition=foundCompetition)
     else:
         flash("Something went wrong-please try again")
         return render_template('welcome.html', club=club, competitions=competitions)
@@ -61,39 +61,39 @@ def book(competition, club):
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchasePlaces():
-   
+
     competition = next((c for c in competitions if c['name'] == request.form['competition']), None)
     club = next((c for c in clubs if c['name'] == request.form['club']), None)
 
-   
+
     placesRequired = int(request.form['places'])
 
-   
+
     if not competition or not club:
         flash("Erreur lors de la réservation, veuillez réessayer.")
         return redirect(url_for('index'))
 
-    
+
     if placesRequired <= 0:
         flash("Erreur : Le nombre de places doit être supérieur à 0.")
         return render_template('booking.html', club=club, competition=competition)
 
-   
+
     if placesRequired > 12:
         flash("Erreur : Vous ne pouvez pas réserver plus de 12 places à la fois.")
         return render_template('booking.html', club=club, competition=competition)
 
-    
+
     if placesRequired > int(competition['numberOfPlaces']):
         flash(f"Erreur : Il n'y a pas assez de places disponibles pour la compétition {competition['name']}.")
         return render_template('booking.html', club=club, competition=competition)
 
-    
+
     if placesRequired > int(club['points']):
         flash(f"Erreur : Vous n'avez pas assez de points. Points disponibles : {club['points']}.")
         return render_template('booking.html', club=club, competition=competition)
 
-    
+
     competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - placesRequired
     club['points'] = int(club['points']) - placesRequired
 
@@ -111,12 +111,12 @@ def showPoints():
 def login():
     if request.method == 'POST':
         email = request.form['email']
-        
+
         club = next((club for club in clubs if club['email'] == email), None)
-        
+
         if club:
-            
-            session['club'] = club  
+
+            session['club'] = club
             flash(f"Bienvenue {club['name']}!", "success")
             return redirect(url_for('showSummary'))
         else:
@@ -151,6 +151,3 @@ def select_competition(club_name):
 # main driver function
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
