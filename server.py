@@ -127,7 +127,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    session.pop('club', None)  # Supprime la session
+    session.pop('club', None)
     flash("Vous vous êtes déconnecté.", "success")
     return redirect(url_for('index'))
 
