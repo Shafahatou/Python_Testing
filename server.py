@@ -79,11 +79,11 @@ def purchasePlaces():
                 flash(f'Great-booking complete !')
                 return render_template('welcome.html', club=club, competitions=competitions)
             else:
-                message = "You should book no more than 12 places per competition"
+                message = "You should book no mor than 12 places per competition"
         else:
-            message = "You should not book more than yours available points"
+            message = "You should not book mor than yours available points"
     else:
-        message = "The competition is over, the booking is closed !"
+        message = "The competition is over, the booking is closed!"
     flash(message)
     response = make_response(render_template('welcome.html', club=club, competitions=competitions))
     return response, 403
